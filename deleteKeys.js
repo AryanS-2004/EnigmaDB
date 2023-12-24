@@ -4,6 +4,13 @@ const { client1, client2 } = require("./client");
 
 async function delRows() {
     //Current time in epoch seconds
+    try {
+        client1.connect();
+    } catch (err) {}
+    try {
+        client2.connect();
+    } catch (err) {}
+
     const currTime = Math.floor(new Date().getTime() / 1000);
 
     const query = {
@@ -24,9 +31,17 @@ async function delRows() {
     } catch (err) {
         console.log("Error in deleting tuples in client2: ", err.message);
     }
+
+    try {
+        client1.end();
+    } catch (err) {}
+    try {
+        client2.end();
+    } catch (err) {}
 }
 
 //This job runs every 30 mins and does a batch deletion of the keys that are expired
 // and due to this the rebalancing of the tree is done only once every 30 mins
 // as when the user deletes a key it is soft deleted not hard deleted
+delRows();
 setInterval(delRows, 1800000);

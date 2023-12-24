@@ -16,12 +16,13 @@ async function init() {
     rl.setPrompt("> ");
     rl.prompt();
     rl.on("line", async function (line) {
-        const instruction = line.split(" ");
+        // Get the command that the user entered and split it on the basis of spaces
+        let instruction = line.split(" ");
+        instruction = instruction.filter((ins) => ins !== "");
+
+        // Get the command and key from then instruction
         const command = instruction[0];
         const key = instruction[1];
-        const val = instruction[2];
-        const currentEpochTime = Math.floor(new Date().getTime() / 1000);
-        const ttl = parseInt(instruction[3]) + currentEpochTime;
         if (command && command === "GET") {
             if (key && instruction.length === 2) {
                 const query = {
@@ -40,7 +41,7 @@ async function init() {
                         console.log(key, ": ", res.rows[0].val);
                         rl.prompt();
                     } else {
-                        console.log("Key not found.");
+                        console.log(`${key} not found.`);
                         rl.prompt();
                     }
                 } catch (err) {
@@ -54,12 +55,15 @@ async function init() {
                 rl.prompt();
             }
         } else if (command && command === "SET") {
+            const val = instruction[2];
+            let ttl = instruction[3];
+            const currentEpochTime = Math.floor(new Date().getTime() / 1000);
+            ttl = parseInt(ttl) + currentEpochTime;
             if (key && val && ttl && instruction.length === 4) {
                 const query = {
                     text: "INSERT INTO kv_store (key, val, expired_at) VALUES ($1, $2, $3) ON CONFLICT (key) DO UPDATE SET key = $1 , val = $2, expired_at = $3;",
                     values: [key, val, ttl],
                 };
-
                 try {
                     const letter = key.charAt(0).toLowerCase();
                     let res;
@@ -74,7 +78,7 @@ async function init() {
                         );
                         rl.prompt();
                     } else {
-                        console.log(`No rows found for key ${key}.`);
+                        console.log(`${key} not found.`);
                         rl.prompt();
                     }
                 } catch (err) {
@@ -107,7 +111,7 @@ async function init() {
                         );
                         rl.prompt();
                     } else {
-                        console.log(`No rows found for key ${key}.`);
+                        console.log(`${key} not found.`);
                         rl.prompt();
                     }
                 } catch (err) {
@@ -117,6 +121,42 @@ async function init() {
             } else {
                 console.error(
                     "The command is incorrect please give the command in the format : 'DELETE key'"
+                );
+                rl.prompt();
+            }
+        } else if (command && command === "EXPIRE") {
+            let ttl = instruction[2];
+            const currentEpochTime = Math.floor(new Date().getTime() / 1000);
+            ttl = parseInt(ttl) + currentEpochTime;
+            if (key && ttl && instruction.length === 3) {
+                const query = {
+                    text: "UPDATE kv_store SET expired_at=$1 WHERE key=$2;",
+                    values: [ttl, key],
+                };
+                try {
+                    const letter = key.charAt(0).toLowerCase();
+                    let res;
+                    if (letter <= "m") {
+                        res = await client1.query(query);
+                    } else {
+                        res = await client2.query(query);
+                    }
+                    if (res.rowCount > 0) {
+                        console.log(
+                            `Successfully deleted ${res.rowCount} row(s) for key ${key}.`
+                        );
+                        rl.prompt();
+                    } else {
+                        console.log(`${key} not found.`);
+                        rl.prompt();
+                    }
+                } catch (err) {
+                    console.error("Error executing EXPIRE query:", err.message);
+                    rl.prompt();
+                }
+            } else {
+                console.error(
+                    "The command is incorrect please give the command in the format : 'EXPIRE key TTL(s)'"
                 );
                 rl.prompt();
             }
