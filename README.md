@@ -24,7 +24,50 @@ To get started with Enigma DB, follow these simple steps:
 
 4. **Integration with Existing Database**: Easily integrate Enigma DB with your existing PostgreSQL database, turning it into a dynamic key-value store.
 
-## Example Usage
+## Usage Flow
+
+Follow these steps to effectively use Enigma DB in your project:
+
+### 1. Configure PostgreSQL URLs
+
+Add the PostgreSQL URLs of your servers to the `env.ts` file.
+
+### 2. Compile TypeScript
+
+Run the TypeScript compiler to convert your TypeScript files to JavaScript.
+
+```bash
+tsc
+```
+
+### 3. Initialize Tables
+
+Run the initialization script to create the required tables for Enigma DB.
+
+```bash
+node dist/init.js
+```
+
+### 4. Run CRON Job
+
+Initiate the CRON job for periodic cleanup of expired keys.
+
+```bash
+node dist/cron.js
+
+```
+
+## Interactive Mode
+
+Launch Enigma DB in interactive mode to execute commands using the CLI.
+
+```bash
+node dist/interactive.js
+```
+## Normal Mode
+
+Use Enigma DB in normal mode by incorporating it into your TypeScript/JavaScript code. Below is an example:
+
 
 ```typescript
 import Enigma from "./index";
@@ -53,3 +96,4 @@ async function init(): Promise<void> {
 }
 
 init();
+```
