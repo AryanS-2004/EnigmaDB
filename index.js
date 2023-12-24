@@ -36,9 +36,9 @@ class Enigma {
                     res = await client2.query(query);
                 }
                 if (res.rows.length > 0) {
-                    return `${key}: ${res.rows[0].val}`;
+                    return res.rows[0].val;
                 } else {
-                    return new Error(`${key} not found.`);
+                    return new Error(`${key} not found!!`);
                 }
             } catch (err) {
                 return new Error(`Error executing GET query: ${err.message}`);
@@ -73,9 +73,9 @@ class Enigma {
                     res = await client2.query(query);
                 }
                 if (res.rowCount > 0) {
-                    return `Successfully inserted ${res.rowCount} row(s) for key ${key}.`;
+                    return 1;
                 } else {
-                    return new Error(`${key} not found.`);
+                    return new Error(`${key} not found!!`);
                 }
             } catch (err) {
                 return new Error(`Error executing SET query: ${err.message}`);
@@ -107,9 +107,9 @@ class Enigma {
                     res = await client2.query(query);
                 }
                 if (res.rowCount > 0) {
-                    return `Successfully deleted ${res.rowCount} row(s) for key ${key}.`;
+                    return 1;
                 } else {
-                    return new Error(`${key} not found.`);
+                    return new Error(`${key} not found!!`);
                 }
             } catch (err) {
                 return new Error(
@@ -145,9 +145,9 @@ class Enigma {
                     res = await client2.query(query);
                 }
                 if (res.rowCount > 0) {
-                    return `Successfully deleted ${res.rowCount} row(s) for key ${key}.`;
+                    return 1;
                 } else {
-                    return new Error(`${key} not found.`);
+                    return new Error(`${key} not found!!`);
                 }
             } catch (err) {
                 return new Error(
