@@ -1,6 +1,6 @@
-const { client1, client2 } = require("./client");
+import { client1, client2 } from "./client";
 
-async function init() {
+async function init(): Promise<void> {
     console.log("Connecting DB...");
     await client1.connect();
     await client2.connect();
@@ -11,12 +11,15 @@ async function init() {
     const query = {
         text: "CREATE TABLE kv_store(key VARCHAR(255) PRIMARY KEY, val TEXT, expired_at INTEGER);",
     };
+
     try {
         await client1.query(query);
     } catch (err) {}
+
     try {
         await client2.query(query);
     } catch (err) {}
+
     console.log("Created the required tables!!\n");
     console.log("Disconnecting Clients...");
     await client1.end();
