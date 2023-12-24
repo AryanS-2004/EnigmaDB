@@ -1,3 +1,5 @@
+// Code to create the tables required in the DB
+
 import { client1, client2 } from "./client";
 
 async function init(): Promise<void> {

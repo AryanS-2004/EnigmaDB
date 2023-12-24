@@ -1,3 +1,5 @@
+// Making Postgres Clients for use
+
 import { Client } from "pg";
 import { server1, server2 } from "./env";
 

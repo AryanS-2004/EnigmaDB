@@ -1,3 +1,5 @@
+// Code to use the DB in interactive CLI mode
+
 import { client1, client2 } from "./client";
 import * as readline from "readline";
 

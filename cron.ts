@@ -1,3 +1,5 @@
+//CRON Job to delete expired keys
+
 import { client1, client2 } from "./client";
 
 async function delRows() {

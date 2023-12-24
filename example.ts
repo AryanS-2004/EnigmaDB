@@ -1,3 +1,5 @@
+// Example on how to use the Enigma DB
+
 import Enigma from "./index";
 
 const enigmaInstance = new Enigma();

@@ -1,3 +1,5 @@
+// Enigma DB code
+
 import { client1, client2 } from "./client";
 
 class Enigma {
