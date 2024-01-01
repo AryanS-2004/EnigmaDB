@@ -1,4 +1,5 @@
 "use strict";
+//CRON Job to delete expired keys
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.delRows = void 0;
 const client_1 = require("./client");
 function delRows() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -52,8 +54,8 @@ function delRows() {
         catch (err) { }
     });
 }
-// This job runs every 30 mins and does a batch deletion of the keys that are expired
+exports.delRows = delRows;
+// This job runs every 10 mins and does a batch deletion of the keys that are expired
 // and due to this, the rebalancing of the tree is done only once every 30 mins
 // as when the user deletes a key it is soft deleted not hard deleted
-delRows();
-setInterval(delRows, 1800000);
+setInterval(delRows, 600000);

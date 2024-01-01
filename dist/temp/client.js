@@ -1,4 +1,5 @@
 "use strict";
+// Making Postgres Clients for use
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.client2 = exports.client1 = void 0;
 const pg_1 = require("pg");

@@ -2,6 +2,7 @@
 
 import { client1, client2 } from "./client";
 import * as readline from "readline";
+import { delRows } from "./cron";
 
 // Readline is used to make the DB interactive and get commands from the user using a CLI
 const rl = readline.createInterface({
@@ -14,6 +15,16 @@ async function init(): Promise<void> {
     await client1.connect();
     await client2.connect();
     console.log("DB Connected!!\n");
+    console.log("Creating the required tables...");
+    const query = {
+        text: "CREATE TABLE kv_store(key VARCHAR(255) PRIMARY KEY, val TEXT, expired_at INTEGER);",
+    };
+    await client1.query("DROP TABLE IF EXISTS kv_store;");
+    await client2.query("DROP TABLE IF EXISTS kv_store;");
+    await client1.query(query);
+    await client2.query(query);
+    console.log("Created the required tables!!\n");
+    setInterval(delRows, 600000)
 
     rl.setPrompt("> ");
     rl.prompt();

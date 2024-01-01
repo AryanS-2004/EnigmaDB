@@ -1,4 +1,5 @@
 "use strict";
+// Code to use the DB in interactive CLI mode
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -45,6 +46,19 @@ function init() {
         yield client_1.client1.connect();
         yield client_1.client2.connect();
         console.log("DB Connected!!\n");
+        console.log("Creating the required tables...");
+        const query = {
+            text: "CREATE TABLE kv_store(key VARCHAR(255) PRIMARY KEY, val TEXT, expired_at INTEGER);",
+        };
+        try {
+            yield client_1.client1.query(query);
+        }
+        catch (err) { }
+        try {
+            yield client_1.client2.query(query);
+        }
+        catch (err) { }
+        console.log("Created the required tables!!\n");
         rl.setPrompt("> ");
         rl.prompt();
         rl.on("line", function (line) {

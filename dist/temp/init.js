@@ -20,6 +20,8 @@ function init() {
         const query = {
             text: "CREATE TABLE kv_store(key VARCHAR(255) PRIMARY KEY, val TEXT, expired_at INTEGER);",
         };
+        yield client_1.client1.query("DROP TABLE IF EXISTS kv_store;");
+        yield client_1.client2.query("DROP TABLE IF EXISTS kv_store;");
         try {
             yield client_1.client1.query(query);
         }
