@@ -2,6 +2,19 @@
 
 Enigma DB is a versatile, lightweight database built on top of PostgreSQL, transforming your relational database into a powerful key-value store. This project is designed to provide a convenient interface, allowing users to interact with their database using simple commands.
 
+
+## Installation
+
+```bash
+npm install enigma-db   
+```
+## Link
+
+```
+https://www.npmjs.com/package/enigma-db
+```
+
+
 ## Features
 
 - **Key-Value Storage**: Seamlessly utilize your PostgreSQL database as a key-value store. Enigma DB efficiently manages keys and their corresponding values, making it easy to store, retrieve, and manipulate data.

@@ -1,10 +1,13 @@
 {
   "name": "enigma-db",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Enigma DB is a versatile, lightweight database built on top of PostgreSQL, transforming your relational database into a powerful key-value store. This project is designed to provide a convenient and interactive interface, allowing users to interact with their database using simple commands.",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/AryanS-2004/EnigmaDB.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AryanS-2004/EnigmaDB.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
