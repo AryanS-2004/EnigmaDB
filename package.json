@@ -1,6 +1,6 @@
 {
   "name": "enigma-db",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Enigma DB is a versatile, lightweight database built on top of PostgreSQL, transforming your relational database into a powerful key-value store. This project is designed to provide a convenient and interactive interface, allowing users to interact with their database using simple commands.",
   "main": "dist/src/index.js",
   "types": "dist/index.d.ts",
@@ -18,7 +18,7 @@
   "author": "Aryan Singla",
   "license": "ISC",
   "dependencies": {
-    "enigma-db": "^1.0.0",
+    "enigma-db": "^1.0.3",
     "pg": "^8.11.3"
   },
   "devDependencies": {
