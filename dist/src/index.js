@@ -19,6 +19,7 @@ class Enigma {
             connectionString: server2,
         });
         this.isConnected = false;
+        this.intervalId = null;
     }
     connect() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -37,7 +38,7 @@ class Enigma {
                 // and due to this, the rebalancing of the tree is done only once every 30 mins
                 // as when the user deletes a key it is soft deleted not hard deleted
                 // this.delRows();
-                setInterval(this.delRows, 600000);
+                this.intervalId = setInterval(this.delRows, 600000);
             }
             catch (err) {
                 throw new Error(`\n\nError during table creation: ${err}\n\n`);
@@ -77,10 +78,13 @@ class Enigma {
         return __awaiter(this, void 0, void 0, function* () {
             this.checkConnection();
             try {
-                // console.log("Disconnecting Clients...");
+                if (this.intervalId !== null) {
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;
+                }
                 yield this.client1.end();
                 yield this.client2.end();
-                // console.log("Clients Disconnected!!\n");
+                this.isConnected = false;
             }
             catch (err) {
                 throw new Error(`\n\nError disconnecting: ${err}\n\n`);
